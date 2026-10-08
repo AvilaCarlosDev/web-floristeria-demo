@@ -214,6 +214,21 @@ html[data-motion] [data-reveal="trazo"].is-in .petalo {
   animation: petalo-flota 5.5s ease-in-out infinite alternate;
 }
 
+@keyframes mapa-pin-rebote {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+.mapa-pin {
+  animation: mapa-pin-rebote 2.6s ease-in-out 1.1s infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -226,6 +241,10 @@ html[data-motion] [data-reveal="trazo"].is-in .petalo {
 
   .petalo {
     animation-play-state: paused !important;
+  }
+
+  .mapa-pin {
+    animation: none !important;
   }
 
   html[data-motion] [data-reveal],
