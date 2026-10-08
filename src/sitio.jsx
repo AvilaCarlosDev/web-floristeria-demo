@@ -52,7 +52,7 @@ export function MenuMovil({ enlaces, activa, cta, tono }) {
                 href={`#${id}`}
                 onClick={() => setAbierto(false)}
                 aria-current={activa === id ? 'true' : undefined}
-                className={`flex items-center justify-between py-4 text-lg font-bold transition ${activa === id ? tono.activo : ''}`}
+                className={`barrido flex items-center justify-between py-4 text-lg font-bold transition ${activa === id ? tono.activo : ''}`}
               >
                 {texto}
                 <span aria-hidden="true" className="opacity-40">→</span>

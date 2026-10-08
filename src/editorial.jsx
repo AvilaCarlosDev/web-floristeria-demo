@@ -1,7 +1,11 @@
+import { useRef } from 'react'
+import { useParallax } from './motion.js'
+import { Titulo } from './motion.jsx'
+
 export function CabeceraSeccion({ numero, kicker, nota, children }) {
   return (
     <div>
-      <div className="flex items-center gap-4 border-t-2 border-[#4a151c] pt-4">
+      <div data-reveal="corte" className="flex items-center gap-4 border-t-2 border-[#4a151c] pt-4">
         {numero && (
           <span className="tabular font-serif text-lg font-semibold italic text-[#8a4a55]">{numero}</span>
         )}
@@ -9,20 +13,24 @@ export function CabeceraSeccion({ numero, kicker, nota, children }) {
         <span className="hidden h-px flex-1 bg-[#e3d2c7] md:block" />
         {nota && <span className="hidden text-xs italic text-[#8a5a52] md:block">{nota}</span>}
       </div>
-      <h2 className="mt-6 max-w-4xl font-serif text-[clamp(2.35rem,4.6vw,4.25rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-[#4a151c]">
+      <Titulo className="mt-6 max-w-4xl font-serif text-[clamp(2.35rem,4.6vw,4.25rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-[#4a151c]">
         {children}
-      </h2>
+      </Titulo>
     </div>
   )
 }
 
 export function Figura({ src, alt, numero, pie, className = '', imgClassName = '', tono = 'oscuro' }) {
   const claro = tono === 'claro'
+  const ventana = useRef(null)
+  useParallax(ventana)
 
   return (
     <figure className={className}>
       <div className={`border bg-white p-3 shadow-[0_26px_55px_-45px_rgba(74,21,28,0.65)] ${claro ? 'border-white/45' : 'border-[#e0cdc2]'}`}>
-        <img src={src} alt={alt} className={`w-full object-cover ${imgClassName}`} />
+        <div ref={ventana} data-reveal="foto" className={`overflow-hidden bg-[#efe2d8] ${imgClassName}`}>
+          <img src={src} alt={alt} className="h-full w-full object-cover" />
+        </div>
       </div>
       <figcaption className={`mt-3 flex items-baseline gap-3 text-sm italic leading-6 ${claro ? 'text-white/75' : 'text-[#76574f]'}`}>
         <span className={`shrink-0 text-[10px] font-extrabold uppercase not-italic tracking-[0.24em] ${claro ? 'text-[#f8d8c4]' : 'text-[#8a5a52]'}`}>
@@ -46,13 +54,13 @@ export function DivisorPetalos() {
 
   return (
     <div className="mx-auto w-full max-w-[100rem] px-5 py-7 lg:px-10">
-      <svg viewBox="0 0 1200 64" className="h-16 w-full" fill="none" aria-hidden="true" focusable="false">
-        <path d="M0 32H452M748 32H1200" stroke="#e3d2c7" strokeWidth="1" />
+      <svg viewBox="0 0 1200 64" className="h-16 w-full" fill="none" aria-hidden="true" focusable="false" data-reveal="trazo">
+        <path d="M0 32H452M748 32H1200" stroke="#e3d2c7" strokeWidth="1" pathLength="1" data-trazo />
         <g stroke="#b9737f" strokeWidth="1.4" strokeLinecap="round">
-          <path d="M452 32c58 0 108-3 148-13" />
-          <path d="M452 32c58 0 108 3 148 13" />
-          <path d="M748 32c-58 0-108-3-148-13" />
-          <path d="M748 32c-58 0-108 3-148 13" />
+          <path d="M452 32c58 0 108-3 148-13" pathLength="1" data-trazo />
+          <path d="M452 32c58 0 108 3 148 13" pathLength="1" data-trazo />
+          <path d="M748 32c-58 0-108-3-148-13" pathLength="1" data-trazo />
+          <path d="M748 32c-58 0-108 3-148 13" pathLength="1" data-trazo />
         </g>
         <g fill="#f1d6c8" stroke="#b9737f" strokeWidth="1.2">
           <ellipse cx="500" cy="24" rx="9" ry="5" transform="rotate(-24 500 24)" />
@@ -75,7 +83,7 @@ export function DivisorPetalos() {
               cy={petalo.cy}
               rx={petalo.rx}
               ry={petalo.ry}
-              style={{ animationDelay: petalo.espera, '--giro': `${petalo.giro}deg` }}
+              style={{ animationDelay: petalo.espera, transitionDelay: petalo.espera, '--giro': `${petalo.giro}deg` }}
             />
           ))}
         </g>

@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
 import { MenuMovil, SaltarAlContenido, WhatsAppFlotante } from './sitio.jsx'
 import { useSeccionActiva, wa } from './navegacion.js'
+import { useRevelados } from './motion.js'
 import { CabeceraSeccion, DivisorPetalos, Figura } from './editorial.jsx'
+import { Contador, Titulo } from './motion.jsx'
 
 const enlaces = [
   ['catalogo', 'Catálogo'],
@@ -106,9 +108,10 @@ const reviews = [
 ]
 
 const cifras = [
-  ['+1.800', 'entregas realizadas'],
-  ['24 h', 'por encargo'],
-  ['4.9 / 5', 'en reseñas'],
+  { valor: 10, sufijo: ' años', etiqueta: 'de atelier' },
+  { valor: 1800, prefijo: '+', etiqueta: 'entregas realizadas' },
+  { valor: 24, sufijo: ' h', etiqueta: 'por encargo' },
+  { valor: 4.9, decimales: 1, sufijo: ' / 5', etiqueta: 'en reseñas' },
 ]
 
 const folio = (indice) => String(indice + 1).padStart(2, '0')
@@ -116,6 +119,8 @@ const folio = (indice) => String(indice + 1).padStart(2, '0')
 function App() {
   const [activeOccasion, setActiveOccasion] = useState('Todos')
   const [favorites, setFavorites] = useState([])
+
+  useRevelados()
 
   const filteredArrangements = useMemo(() => {
     if (activeOccasion === 'Todos') return arrangements
@@ -201,7 +206,7 @@ function App() {
                   className="flex items-baseline gap-2 py-1 transition hover:text-[#4a151c]"
                 >
                   <span className="tabular text-[10px] font-extrabold tracking-[0.18em] text-[#8a4a55]">{folio(indice)}</span>
-                  <span className={activa === id ? 'border-b-2 border-[#4a151c] font-serif text-lg font-semibold italic text-[#4a151c]' : 'text-[#76574f]'}>
+                  <span className={activa === id ? 'border-b-2 border-[#4a151c] font-serif text-lg font-semibold italic text-[#4a151c]' : 'barrido text-[#76574f]'}>
                     {texto}
                   </span>
                 </a>
@@ -214,12 +219,12 @@ function App() {
               <a
                 href={wa(mensajeFavoritos)}
                 aria-label={`Consultar ${favorites.length} arreglos guardados`}
-                className="tabular hidden border border-[#4a151c] bg-white px-3 py-2 text-xs font-extrabold text-[#4a151c] transition hover:bg-[#4a151c] hover:text-white sm:inline-flex"
+                className="tabular hidden border border-[#4a151c] bg-white px-3 py-2 text-xs font-extrabold text-[#4a151c] transition hover:-translate-y-0.5 hover:bg-[#4a151c] hover:text-white sm:inline-flex"
               >
                 ♥ {favorites.length} guardados
               </a>
             )}
-            <a href="#pedido" className="hidden border border-[#4a151c] bg-[#4a151c] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:bg-[#7f2432] sm:inline-flex">
+            <a href="#pedido" className="barrido-borde hidden border border-[#4a151c] bg-[#4a151c] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:-translate-y-0.5 hover:bg-[#7f2432] sm:inline-flex">
               Pedir flores
             </a>
             <MenuMovil
@@ -239,7 +244,7 @@ function App() {
 
       <main id="contenido">
         <section id="inicio" className="mx-auto max-w-[100rem] px-5 pt-9 lg:px-10 lg:pt-12">
-          <div className="flex items-center gap-4 border-y border-[#e3d2c7] py-3 text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8a5a52]">
+          <div data-reveal="corte" className="flex items-center gap-4 border-y border-[#e3d2c7] py-3 text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8a5a52]">
             <span>Portada</span>
             <span className="h-px flex-1 bg-[#e3d2c7]" />
             <span className="tabular">Edición N.º 12</span>
@@ -247,31 +252,41 @@ function App() {
             <span className="hidden sm:block">Temporada 2026</span>
           </div>
 
-          <h1 className="mt-8 font-serif text-[clamp(3rem,10.5vw,9.5rem)] font-semibold leading-[0.86] tracking-[-0.03em] text-[#4a151c]">
+          <Titulo
+            as="h1"
+            paso={70}
+            className="mt-8 font-serif text-[clamp(3rem,10.5vw,9.5rem)] font-semibold leading-[0.86] tracking-[-0.03em] text-[#4a151c]"
+          >
             Flores que parecen <span className="font-medium italic text-[#8a4a55]">escritas</span> para alguien
-          </h1>
+          </Titulo>
 
           <div className="mt-10 grid gap-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,2fr)_auto] lg:gap-10">
-            <div className="flex flex-col gap-7">
+            <div data-reveal="sube" className="flex flex-col gap-7">
               <p className="border-l-2 border-[#4a151c] pl-5 text-base leading-7 text-[#76574f] sm:text-lg sm:leading-8">
                 Ramos, cajas florales, desayunos y decoración íntima creados con flores frescas, paletas suaves y una presentación pensada para emocionar.
               </p>
 
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-                <a href="#catalogo" className="inline-flex items-center justify-center border border-[#4a151c] bg-[#4a151c] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:bg-[#7f2432] hover:border-[#7f2432]">
+                <a href="#catalogo" className="barrido-borde inline-flex items-center justify-center border border-[#4a151c] bg-[#4a151c] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:-translate-y-0.5 hover:bg-[#7f2432] hover:border-[#7f2432]">
                   Ver colección
                 </a>
-                <a href="#pedido" className="inline-flex items-center justify-center border border-[#4a151c] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-[#4a151c] transition hover:bg-[#4a151c] hover:text-white">
+                <a href="#pedido" className="barrido-borde inline-flex items-center justify-center border border-[#4a151c] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-[#4a151c] transition hover:-translate-y-0.5 hover:bg-[#4a151c] hover:text-white">
                   Diseñar un ramo
                 </a>
               </div>
 
               <div className="border-t border-[#e3d2c7]">
-                {cifras.map(([valor, etiqueta]) => (
-                  <div key={etiqueta} className="flex items-baseline gap-3 border-b border-[#e3d2c7] py-2.5">
-                    <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#8a5a52]">{etiqueta}</span>
+                {cifras.map((cifra) => (
+                  <div key={cifra.etiqueta} className="flex items-baseline gap-3 border-b border-[#e3d2c7] py-2.5">
+                    <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#8a5a52]">{cifra.etiqueta}</span>
                     <span aria-hidden="true" className="hidden flex-1 border-b border-dotted border-[#c9b1a5] lg:block" />
-                    <span className="tabular ml-auto font-serif text-xl font-semibold italic text-[#4a151c]">{valor}</span>
+                    <Contador
+                      valor={cifra.valor}
+                      decimales={cifra.decimales}
+                      prefijo={cifra.prefijo}
+                      sufijo={cifra.sufijo}
+                      className="tabular ml-auto font-serif text-xl font-semibold italic text-[#4a151c]"
+                    />
                   </div>
                 ))}
               </div>
@@ -310,21 +325,21 @@ function App() {
                 Mesa Jardín Íntimo para <span className="font-medium italic">celebrar sin prisa</span>
               </CabeceraSeccion>
 
-              <p className="capitular mt-6 text-base leading-8 text-[#76574f]">
+              <p data-reveal="sube" className="capitular mt-6 text-base leading-8 text-[#76574f]">
                 Un centro de mesa no se improvisa: se corta, se mide y se coloca pensando en la conversación de
                 quienes se sienten alrededor. Este diseño reúne rosas rosadas, ranúnculos blancos y follaje
                 suelto en un jarrón de cerámica, con velas altas que bajan la luz cuando cae la tarde. Lo montamos
                 el mismo día del evento y lo entregamos ya dispuesto.
               </p>
 
-              <blockquote className="mt-7 border-t border-[#e3d2c7] pt-6 font-serif text-2xl italic leading-snug text-[#4a151c] sm:text-3xl">
+              <blockquote data-reveal="pagina" className="mt-7 border-t border-[#e3d2c7] pt-6 font-serif text-2xl italic leading-snug text-[#4a151c] sm:text-3xl">
                 “Un arreglo se construye como un párrafo: una idea, ritmo y un cierre que se recuerda.”
                 <span className="mt-3 block text-[10px] font-extrabold uppercase not-italic tracking-[0.24em] text-[#8a5a52]">
                   Atelier Siena · Punto Fijo
                 </span>
               </blockquote>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-[#e3d2c7] pt-6">
+              <div data-reveal="sube" className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-[#e3d2c7] pt-6">
                 <strong className="tabular font-serif text-5xl font-semibold italic text-[#4a151c]">$120</strong>
                 <span className="max-w-xs text-sm leading-6 text-[#76574f]">
                   Centro de mesa para cenas, bodas civiles y celebraciones.
@@ -332,7 +347,7 @@ function App() {
                 <a
                   href={wa('Hola, quiero el arreglo Mesa Jardín Íntimo ($120).')}
                   aria-label="Pedir Mesa Jardín Íntimo"
-                  className="ml-auto inline-flex items-center justify-center border border-[#4a151c] bg-[#4a151c] px-6 py-3.5 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:border-[#7f2432] hover:bg-[#7f2432]"
+                  className="barrido-borde ml-auto inline-flex items-center justify-center border border-[#4a151c] bg-[#4a151c] px-6 py-3.5 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:-translate-y-0.5 hover:border-[#7f2432] hover:bg-[#7f2432]"
                 >
                   Pedir este arreglo
                 </a>
@@ -347,7 +362,7 @@ function App() {
               Arreglos listos <span className="font-medium italic">para regalar</span>
             </CabeceraSeccion>
 
-            <div className="mt-7 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div data-reveal="sube" className="mt-7 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <p className="max-w-md text-base leading-7 text-[#76574f]">
                 Arreglos del día con flor fresca. Guarda los que te gusten con el corazón y consúltalos todos juntos.
               </p>
@@ -369,7 +384,12 @@ function App() {
 
             <ol className="mt-10 border-t border-[#e3d2c7]">
               {filteredArrangements.map((item, indice) => (
-                <li key={item.name} className="border-b border-[#e3d2c7]">
+                <li
+                  key={item.name}
+                  data-reveal="sube"
+                  style={{ '--retardo': `${indice * 60}ms` }}
+                  className="border-b border-[#e3d2c7]"
+                >
                   <article className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:gap-6">
                     <div className="flex min-w-0 flex-1 items-center gap-4 sm:gap-6">
                       <span className="tabular w-7 shrink-0 font-serif text-xl font-semibold italic text-[#8a4a55]">{folio(indice)}</span>
@@ -407,7 +427,7 @@ function App() {
                       <a
                         href={wa(`Hola, quiero pedir el ${item.name} ($${item.price}).`)}
                         aria-label={`Pedir ${item.name}`}
-                        className="border border-[#4a151c] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[#4a151c] transition hover:bg-[#4a151c] hover:text-white"
+                        className="barrido-borde border border-[#4a151c] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[#4a151c] transition hover:-translate-y-0.5 hover:bg-[#4a151c] hover:text-white"
                       >
                         Pedir
                       </a>
@@ -428,7 +448,7 @@ function App() {
 
           <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
             {services.map((service, indice) => (
-              <figure key={service.title} className={indice === 1 ? 'md:mt-14' : indice === 2 ? 'md:mt-7' : ''}>
+              <figure key={service.title} data-reveal="sube" style={{ '--retardo': `${indice * 110}ms` }} className={indice === 1 ? 'md:mt-14' : indice === 2 ? 'md:mt-7' : ''}>
                 <div className="border border-[#e0cdc2] bg-white p-3 shadow-[0_26px_50px_-45px_rgba(74,21,28,0.55)]">
                   <img src={service.image} alt={service.title} className="h-72 w-full object-cover sm:h-80" />
                 </div>
@@ -445,21 +465,24 @@ function App() {
         <section id="atelier" className="mt-16 bg-[#4a151c] text-white lg:mt-24">
           <div className="mx-auto grid max-w-[100rem] gap-10 px-5 py-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:px-10 lg:py-24">
             <div>
-              <div className="flex items-center gap-4 border-t-2 border-white/45 pt-4">
+              <div data-reveal="corte" className="flex items-center gap-4 border-t-2 border-white/45 pt-4">
                 <span className="tabular font-serif text-lg font-semibold italic text-[#f8d8c4]">03</span>
                 <span className="text-[11px] font-extrabold uppercase tracking-[0.28em] text-[#f0c3b3]">Reportaje</span>
                 <span className="hidden h-px flex-1 bg-white/25 md:block" />
                 <span className="hidden text-xs italic text-white/75 md:block">El ritmo del atelier</span>
               </div>
-              <h2 className="mt-6 max-w-2xl font-serif text-[clamp(2.35rem,4.6vw,4.25rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-white">
+              <Titulo
+                paso={75}
+                className="mt-6 max-w-2xl font-serif text-[clamp(2.35rem,4.6vw,4.25rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-white"
+              >
                 Flores frescas, armado lento <span className="font-medium italic text-[#f8d8c4]">y entrega cuidada</span>
-              </h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-white/75 lg:text-lg">
+              </Titulo>
+              <p data-reveal="sube" className="mt-6 max-w-xl text-base leading-8 text-white/75 lg:text-lg">
                 Compramos flor cada mañana y armamos cada pedido a mano el mismo día. Si pides antes de las 12,
                 sale con la ruta de las 2.
               </p>
 
-              <ol className="mt-9 border-t border-white/20">
+              <ol data-reveal="sube" className="mt-9 border-t border-white/20">
                 {moments.map(([time, text], indice) => (
                   <li key={time} className="flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b border-white/20 py-4">
                     <span className="tabular w-6 text-[10px] font-extrabold tracking-[0.2em] text-[#f0c3b3]">{folio(indice)}</span>
@@ -489,7 +512,7 @@ function App() {
 
             <div className="mt-12 grid gap-8 md:grid-cols-3">
               {reviews.map((review, indice) => (
-                <article key={review.name} className="flex flex-col border border-[#e3d2c7] bg-[#fbf4ed] p-7 shadow-[0_26px_50px_-46px_rgba(74,21,28,0.5)]">
+                <article key={review.name} data-reveal="sube" style={{ '--retardo': `${indice * 110}ms` }} className="flex flex-col border border-[#e3d2c7] bg-[#fbf4ed] p-7 shadow-[0_26px_50px_-46px_rgba(74,21,28,0.5)]">
                   <p className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8a5a52]">Carta N.º {folio(indice)}</p>
                   <p className="mt-4 font-serif text-xl italic leading-8 text-[#4a151c]">“{review.text}”</p>
                   <div className="mt-auto flex items-center gap-3 border-t border-dashed border-[#dcc4b8] pt-5">
@@ -515,12 +538,12 @@ function App() {
                 Cuéntanos la ocasión y armamos algo <span className="font-medium italic">irrepetible</span>
               </CabeceraSeccion>
 
-              <p className="mt-6 max-w-md text-base leading-7 text-[#76574f]">
+              <p data-reveal="sube" className="mt-6 max-w-md text-base leading-7 text-[#76574f]">
                 Llena lo que sepas y te escribimos el mensaje. Lo revisas en WhatsApp antes de enviarlo y te
                 respondemos con una propuesta y foto de referencia.
               </p>
 
-              <ol className="mt-8 border-t border-[#e3d2c7]">
+              <ol data-reveal="sube" className="mt-8 border-t border-[#e3d2c7]">
                 {[
                   'Te proponemos flor, paleta y formato según la ocasión.',
                   'Confirmamos precio y fecha antes de armar nada.',
@@ -534,7 +557,7 @@ function App() {
               </ol>
             </div>
 
-            <form className="border border-dashed border-[#c9a08f] bg-white/80 p-5 sm:p-7" onSubmit={(event) => event.preventDefault()} noValidate>
+            <form data-reveal="pagina" className="border border-dashed border-[#c9a08f] bg-white/80 p-5 sm:p-7" onSubmit={(event) => event.preventDefault()} noValidate>
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-dashed border-[#dcc4b8] pb-4 text-[10px] font-extrabold uppercase tracking-[0.26em] text-[#8a5a52]">
                 <span>Boleta de encargo</span>
                 <span className="tabular">Siena Flower · N.º 12</span>
@@ -576,7 +599,7 @@ function App() {
                   <textarea value={encargo.tarjeta} onChange={campo('tarjeta')} rows={3} maxLength={180} placeholder="Lo escribimos a mano" className="resize-none border border-[#e0cdc2] bg-white px-4 py-3 text-sm font-semibold normal-case tracking-normal text-[#2d1817] outline-none transition placeholder:font-medium placeholder:text-[#8a6f66] focus:border-[#4a151c]" />
                   <span className="tabular text-right text-xs font-semibold normal-case tracking-normal text-[#8a5a52]">{encargo.tarjeta.length}/180</span>
                 </label>
-                <a href={wa(mensajeEncargo)} onClick={enviarEncargo} className="inline-flex justify-center border border-[#4a151c] bg-[#4a151c] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:border-[#7f2432] hover:bg-[#7f2432] active:scale-[.98] sm:col-span-2">
+                <a href={wa(mensajeEncargo)} onClick={enviarEncargo} className="barrido-borde inline-flex justify-center border border-[#4a151c] bg-[#4a151c] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:-translate-y-0.5 hover:border-[#7f2432] hover:bg-[#7f2432] active:scale-[.98] sm:col-span-2">
                   Preparar mensaje en WhatsApp
                 </a>
               </div>
@@ -603,7 +626,7 @@ function App() {
               <ul className="mt-5 space-y-3 text-sm font-semibold text-white/70">
                 {enlaces.map(([id, texto], indice) => (
                   <li key={id}>
-                    <a href={`#${id}`} className="flex items-baseline gap-3 transition hover:text-white">
+                    <a href={`#${id}`} className="barrido flex items-baseline gap-3 transition hover:text-white">
                       <span className="tabular text-[10px] font-extrabold text-[#f0c3b3]">{folio(indice)}</span>
                       {texto}
                     </a>
@@ -614,17 +637,17 @@ function App() {
             <div>
               <h3 className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#f8d8c4]">Colección</h3>
               <ul className="mt-5 space-y-3 text-sm font-semibold text-white/70">
-                <li><a href="#catalogo" className="transition hover:text-white">Ramos</a></li>
-                <li><a href="#catalogo" className="transition hover:text-white">Cajas florales</a></li>
-                <li><a href="#servicios" className="transition hover:text-white">Eventos</a></li>
-                <li><a href="#destacado" className="transition hover:text-white">Destacado de la temporada</a></li>
+                <li><a href="#catalogo" className="barrido transition hover:text-white">Ramos</a></li>
+                <li><a href="#catalogo" className="barrido transition hover:text-white">Cajas florales</a></li>
+                <li><a href="#servicios" className="barrido transition hover:text-white">Eventos</a></li>
+                <li><a href="#destacado" className="barrido transition hover:text-white">Destacado de la temporada</a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#f8d8c4]">Contacto</h3>
               <ul className="mt-5 space-y-3 text-sm font-semibold text-white/70">
                 <li>Punto Fijo, Falcón</li>
-                <li><a href={wa()} className="transition hover:text-white">WhatsApp: +58 412-000-0000</a></li>
+                <li><a href={wa()} className="barrido transition hover:text-white">WhatsApp: +58 412-000-0000</a></li>
                 <li>Pedidos: 8:00 AM - 6:00 PM</li>
               </ul>
             </div>
