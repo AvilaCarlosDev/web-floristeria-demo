@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { MenuMovil, SaltarAlContenido, WhatsAppFlotante } from './sitio.jsx'
 import { useSeccionActiva, wa } from './navegacion.js'
 import { useRevelados } from './motion.js'
-import { CabeceraSeccion, DivisorPetalos, Figura } from './editorial.jsx'
+import { BotonComoLlegar, CabeceraSeccion, DivisorPetalos, Figura, MapaUbicacion } from './editorial.jsx'
 import { Contador, Titulo } from './motion.jsx'
 
 const enlaces = [
@@ -11,6 +11,7 @@ const enlaces = [
   ['atelier', 'Atelier'],
   ['resenas', 'Reseñas'],
   ['pedido', 'Pedido a medida'],
+  ['ubicacion', 'Ubicación'],
 ]
 
 const presupuestos = ['Hasta $40', '$40 – $70', '$70 – $120', 'Más de $120']
@@ -116,11 +117,29 @@ const cifras = [
 
 const folio = (indice) => String(indice + 1).padStart(2, '0')
 
+const datosUbicacion = [
+  ['Zona', 'Punto Fijo, Falcón'],
+  ['Horario', '8:00 AM - 6:00 PM'],
+  ['Entregas', 'El mismo día en Punto Fijo'],
+  ['Pedidos', 'WhatsApp +58 412-000-0000'],
+]
+
 function App() {
   const [activeOccasion, setActiveOccasion] = useState('Todos')
   const [favorites, setFavorites] = useState([])
 
   useRevelados()
+
+  useEffect(() => {
+    const destino = window.location.hash.slice(1)
+    if (!destino) return undefined
+    const seccion = document.getElementById(destino)
+    if (typeof seccion?.scrollIntoView !== 'function') return undefined
+    seccion.scrollIntoView({ block: 'start', behavior: 'instant' })
+    const reanudar = () => seccion.scrollIntoView({ block: 'start', behavior: 'instant' })
+    window.addEventListener('load', reanudar, { once: true, passive: true })
+    return () => window.removeEventListener('load', reanudar)
+  }, [])
 
   const filteredArrangements = useMemo(() => {
     if (activeOccasion === 'Todos') return arrangements
@@ -197,8 +216,8 @@ function App() {
       <nav aria-label="Principal" className="sticky top-0 z-50 border-y border-[#e3d2c7] bg-[#fbf4ed]/95 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-[100rem] items-center gap-3 px-5 lg:px-10">
           <a href="#inicio" className="font-serif text-xl font-semibold italic text-[#4a151c] lg:hidden">Siena Flower</a>
-          <ul className="hidden items-center gap-7 lg:flex">
-            {enlaces.slice(0, 4).map(([id, texto], indice) => (
+          <ul className="hidden items-center gap-5 lg:flex xl:gap-7">
+            {enlaces.map(([id, texto], indice) => (
               <li key={id}>
                 <a
                   href={`#${id}`}
@@ -606,6 +625,41 @@ function App() {
             </form>
           </div>
         </section>
+
+        <section id="ubicacion" className="border-t border-[#e3d2c7] bg-white/70 py-16 lg:py-24">
+          <div className="mx-auto max-w-[100rem] px-5 lg:px-10">
+            <CabeceraSeccion numero="06" kicker="Ubicación del atelier" nota="Punto Fijo, Falcón">
+              El atelier <span className="font-medium italic">está en Punto Fijo</span>
+            </CabeceraSeccion>
+
+            <div className="mt-12 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+              <div>
+                <p data-reveal="sube" className="capitular text-base leading-8 text-[#76574f]">
+                  Siena Flower trabaja como atelier de encargo en Punto Fijo, estado Falcón. Aquí se elige la
+                  flor, se arman los ramos a mano y salen las entregas del mismo día.
+                </p>
+
+                <dl data-reveal="sube" className="mt-7 border-t border-[#e3d2c7]">
+                  {datosUbicacion.map(([clave, valor]) => (
+                    <div key={clave} className="flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b border-[#e3d2c7] py-3">
+                      <dt className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#8a5a52]">{clave}</dt>
+                      <dd className="ml-auto text-sm font-semibold text-[#4a151c]">{valor}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <p data-reveal="sube" className="mt-6 border-l-2 border-[#4a151c] pl-5 text-sm italic leading-6 text-[#8a5a52]">
+                  Leyenda de zona: el plano esquemático sitúa el atelier dentro de Punto Fijo, sin calles
+                  reales. La dirección exacta se comparte al confirmar el pedido.
+                </p>
+
+                <BotonComoLlegar className="mt-8" />
+              </div>
+
+              <MapaUbicacion />
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="border-t border-[#e3d2c7] bg-[#2d1817] text-white">
@@ -646,7 +700,7 @@ function App() {
             <div>
               <h3 className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#f8d8c4]">Contacto</h3>
               <ul className="mt-5 space-y-3 text-sm font-semibold text-white/70">
-                <li>Punto Fijo, Falcón</li>
+                <li><a href="#ubicacion" className="barrido transition hover:text-white">Punto Fijo, Falcón</a></li>
                 <li><a href={wa()} className="barrido transition hover:text-white">WhatsApp: +58 412-000-0000</a></li>
                 <li>Pedidos: 8:00 AM - 6:00 PM</li>
               </ul>
