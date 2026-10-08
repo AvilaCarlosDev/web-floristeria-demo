@@ -11,6 +11,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { motionActivo } from './motion.js'
+
+if (motionActivo()) document.documentElement.dataset.motion = 'on'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
