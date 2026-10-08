@@ -2,7 +2,7 @@
 
 [Español](README.md) · [English](README.en.md)
 
-<a href="https://agencia-web-floristeria-demo.vercel.app"><img src="docs/portada.jpg" alt="Siena Flower en la computadora y en el teléfono: portada con ramos, precios y pedido por WhatsApp" width="100%"></a>
+<a href="https://agencia-web-floristeria-demo.vercel.app"><img src="docs/portada.jpg" alt="Siena Flower: portada editorial con titular de temporada, navegación y foto del ramo" width="100%"></a>
 
 Sitio web de demostración, de una sola página: floristería boutique con colección por ocasión, servicios, atelier y pedidos por WhatsApp.
 
