@@ -54,6 +54,33 @@ p {
   font-variant-numeric: tabular-nums;
 }
 
+.capitular::first-letter {
+  float: left;
+  margin: 0.06em 0.1em 0 0;
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-size: 3.7em;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 0.76;
+  color: #4a151c;
+}
+
+@keyframes petalo-flota {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(-7px) rotate(var(--giro, 12deg));
+  }
+}
+
+.petalo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: petalo-flota 5.5s ease-in-out infinite alternate;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -62,5 +89,9 @@ p {
   *, *::before, *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+
+  .petalo {
+    animation-play-state: paused !important;
   }
 }

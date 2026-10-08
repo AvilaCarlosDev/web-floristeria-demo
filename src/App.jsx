@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { MenuMovil, SaltarAlContenido, WhatsAppFlotante } from './sitio.jsx'
 import { useSeccionActiva, wa } from './navegacion.js'
+import { CabeceraSeccion, DivisorPetalos, Figura } from './editorial.jsx'
 
 const enlaces = [
   ['catalogo', 'Catálogo'],
@@ -104,6 +105,14 @@ const reviews = [
   },
 ]
 
+const cifras = [
+  ['+1.800', 'entregas realizadas'],
+  ['24 h', 'por encargo'],
+  ['4.9 / 5', 'en reseñas'],
+]
+
+const folio = (indice) => String(indice + 1).padStart(2, '0')
+
 function App() {
   const [activeOccasion, setActiveOccasion] = useState('Todos')
   const [favorites, setFavorites] = useState([])
@@ -150,45 +159,67 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#fbf4ed] text-[#2d1817] antialiased">
-      <SaltarAlContenido className="focus:rounded-full focus:bg-[#4a151c] focus:text-white" />
-      <div className="bg-[#4a151c] text-[11px] font-semibold tracking-[0.18em] text-rose-50/80">
-        <div className="mx-auto flex max-w-7xl items-center justify-center gap-x-8 px-5 py-2.5 text-center uppercase md:justify-between">
+      <SaltarAlContenido className="focus:bg-[#4a151c] focus:text-white" />
+
+      <div className="border-b border-[#e3d2c7] bg-[#f6e7dc]">
+        <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.26em] text-[#8a5a52] lg:px-10">
+          <span className="tabular">Año III · N.º 12</span>
+          <span className="hidden sm:block">Cuaderno floral · Punto Fijo, Falcón</span>
           <span>Flores frescas bajo pedido</span>
-          <span className="hidden md:inline">Entregas en Punto Fijo y zonas cercanas</span>
-          <span className="hidden md:inline">Diseños personalizados por WhatsApp</span>
         </div>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-[#ead8cf] bg-[#fbf4ed]/88 backdrop-blur-xl">
-        <div className="mx-auto flex h-20 max-w-7xl items-center gap-4 px-5 lg:px-8">
-          <a href="#inicio" className="flex shrink-0 items-center gap-3" aria-label="Siena Flower inicio">
-            <span className="grid h-11 w-11 sm:h-12 sm:w-12 place-items-center rounded-full bg-[#4a151c] font-serif text-xl italic text-[#f8d8c4] shadow-xl shadow-[#4a151c]/10">S</span>
-            <span>
-              <span className="block font-serif text-2xl italic tracking-tight">Siena Flower</span>
-              <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-[#8f6a60]">Floral studio</span>
+      <div className="mx-auto max-w-[100rem] px-5 lg:px-10">
+        <div className="flex flex-col items-center gap-5 py-9 text-center lg:py-12">
+          <div className="flex w-full items-center gap-4">
+            <span className="h-px flex-1 bg-[#e3d2c7]" />
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.4em] text-[#8a4a55]">Edición de temporada</span>
+            <span className="h-px flex-1 bg-[#e3d2c7]" />
+          </div>
+          <a href="#inicio" aria-label="Siena Flower, inicio" className="flex items-baseline justify-center gap-4">
+            <span className="hidden text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8a5a52] sm:block">Desde 2016</span>
+            <span className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] font-semibold leading-none tracking-[-0.02em] text-[#4a151c]">
+              Siena <span className="font-medium italic">Flower</span>
             </span>
+            <span className="hidden text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8a5a52] sm:block">Floral studio</span>
           </a>
+          <p className="max-w-2xl text-sm italic leading-6 text-[#76574f]">
+            Ramos, cajas florales y decoración íntima armados a mano cada mañana en Punto Fijo.
+          </p>
+        </div>
+      </div>
 
-          <nav aria-label="Principal" className="ml-auto hidden items-center gap-6 text-sm font-bold text-[#785a52] lg:flex">
-            {enlaces.slice(0, 4).map(([id, texto]) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                aria-current={activa === id ? 'true' : undefined}
-                className={`py-1 transition hover:text-[#4a151c] ${activa === id ? 'font-serif text-lg font-semibold italic text-[#4a151c]' : ''}`}
-              >
-                {texto}
-              </a>
+      <nav aria-label="Principal" className="sticky top-0 z-50 border-y border-[#e3d2c7] bg-[#fbf4ed]/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-[100rem] items-center gap-3 px-5 lg:px-10">
+          <a href="#inicio" className="font-serif text-xl font-semibold italic text-[#4a151c] lg:hidden">Siena Flower</a>
+          <ul className="hidden items-center gap-7 lg:flex">
+            {enlaces.slice(0, 4).map(([id, texto], indice) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  aria-current={activa === id ? 'true' : undefined}
+                  className="flex items-baseline gap-2 py-1 transition hover:text-[#4a151c]"
+                >
+                  <span className="tabular text-[10px] font-extrabold tracking-[0.18em] text-[#8a4a55]">{folio(indice)}</span>
+                  <span className={activa === id ? 'border-b-2 border-[#4a151c] font-serif text-lg font-semibold italic text-[#4a151c]' : 'text-[#76574f]'}>
+                    {texto}
+                  </span>
+                </a>
+              </li>
             ))}
-          </nav>
+          </ul>
 
-          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+          <div className="ml-auto flex items-center gap-2">
             {favorites.length > 0 && (
-              <a href={wa(mensajeFavoritos)} aria-label={`Consultar ${favorites.length} arreglos guardados`} className="tabular hidden rounded-full bg-white px-3 py-2 text-xs font-black text-[#4a151c] shadow-sm transition hover:bg-[#4a151c] hover:text-white sm:inline-flex">
-                ♥ {favorites.length}
+              <a
+                href={wa(mensajeFavoritos)}
+                aria-label={`Consultar ${favorites.length} arreglos guardados`}
+                className="tabular hidden border border-[#4a151c] bg-white px-3 py-2 text-xs font-extrabold text-[#4a151c] transition hover:bg-[#4a151c] hover:text-white sm:inline-flex"
+              >
+                ♥ {favorites.length} guardados
               </a>
             )}
-            <a href="#pedido" className="hidden rounded-full bg-[#4a151c] px-5 py-3 text-sm font-black text-white shadow-lg shadow-[#4a151c]/10 transition hover:bg-[#7f2432] active:scale-[.98] sm:inline-flex">
+            <a href="#pedido" className="hidden border border-[#4a151c] bg-[#4a151c] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:bg-[#7f2432] sm:inline-flex">
               Pedir flores
             </a>
             <MenuMovil
@@ -196,276 +227,416 @@ function App() {
               activa={activa}
               cta={{ href: wa(mensajeFavoritos), texto: 'Pedir por WhatsApp' }}
               tono={{
-                boton: 'rounded-full border border-[#d9b7aa] bg-white text-[#4a151c]',
-                panel: 'border-[#ead8cf] bg-[#fbf4ed] text-[#4a151c]',
-                activo: 'font-serif italic text-[#9f5964]',
-                cta: 'rounded-full bg-[#4a151c] text-white',
+                boton: 'border border-[#c9b1a5] bg-white text-[#4a151c]',
+                panel: 'border-[#e3d2c7] bg-[#fbf4ed] text-[#2d1817]',
+                activo: 'font-serif italic text-[#8a4a55]',
+                cta: 'bg-[#4a151c] text-white',
               }}
             />
           </div>
         </div>
-      </header>
+      </nav>
 
       <main id="contenido">
-        <section id="inicio" className="relative overflow-hidden">
-          <div className="absolute left-[-8rem] top-20 h-72 w-72 rounded-full bg-[#f3c7b4]/55 blur-3xl" />
-          <div className="absolute right-[-8rem] top-44 h-80 w-80 rounded-full bg-[#d88fa0]/35 blur-3xl" />
+        <section id="inicio" className="mx-auto max-w-[100rem] px-5 pt-9 lg:px-10 lg:pt-12">
+          <div className="flex items-center gap-4 border-y border-[#e3d2c7] py-3 text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8a5a52]">
+            <span>Portada</span>
+            <span className="h-px flex-1 bg-[#e3d2c7]" />
+            <span className="tabular">Edición N.º 12</span>
+            <span className="hidden h-px flex-1 bg-[#e3d2c7] sm:block" />
+            <span className="hidden sm:block">Temporada 2026</span>
+          </div>
 
-          <div className="mx-auto grid min-h-[760px] max-w-7xl items-center gap-12 px-5 py-16 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
-            <div className="relative z-10 max-w-2xl">
-              <p className="mb-6 text-sm font-black uppercase tracking-[0.24em] text-[#9f5964]">Boutique floral · hecho a mano</p>
-              <h1 className="font-serif text-6xl font-medium italic leading-[0.92] tracking-[-0.02em] text-[#4a151c] sm:text-7xl lg:text-8xl">
-                Flores que parecen escritas para alguien
-              </h1>
-              <p className="mt-7 max-w-xl text-lg leading-8 text-[#76574f]">
+          <h1 className="mt-8 font-serif text-[clamp(3rem,10.5vw,9.5rem)] font-semibold leading-[0.86] tracking-[-0.03em] text-[#4a151c]">
+            Flores que parecen <span className="font-medium italic text-[#8a4a55]">escritas</span> para alguien
+          </h1>
+
+          <div className="mt-10 grid gap-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,2fr)_auto] lg:gap-10">
+            <div className="flex flex-col gap-7">
+              <p className="border-l-2 border-[#4a151c] pl-5 text-base leading-7 text-[#76574f] sm:text-lg sm:leading-8">
                 Ramos, cajas florales, desayunos y decoración íntima creados con flores frescas, paletas suaves y una presentación pensada para emocionar.
               </p>
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <a href="#catalogo" className="inline-flex items-center justify-center rounded-full bg-[#4a151c] px-8 py-4 text-base font-black text-white transition hover:bg-[#7f2432]">
+
+              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                <a href="#catalogo" className="inline-flex items-center justify-center border border-[#4a151c] bg-[#4a151c] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:bg-[#7f2432] hover:border-[#7f2432]">
                   Ver colección
                 </a>
-                <a href="#pedido" className="inline-flex items-center justify-center rounded-full border border-[#d9b7aa] bg-white/55 px-8 py-4 text-base font-black text-[#4a151c] backdrop-blur transition hover:bg-white">
+                <a href="#pedido" className="inline-flex items-center justify-center border border-[#4a151c] px-7 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-[#4a151c] transition hover:bg-[#4a151c] hover:text-white">
                   Diseñar un ramo
                 </a>
               </div>
-              <div className="mt-12 grid max-w-xl grid-cols-3 divide-x divide-[#e5cfc6] rounded-[2rem] border border-[#ead8cf] bg-white/45 p-2 backdrop-blur">
-                {[
-                  ['+1.800', 'entregas'],
-                  ['24h', 'por encargo'],
-                  ['4.9★', 'reseñas'],
-                ].map(([value, label]) => (
-                  <div key={label} className="px-4 py-3 text-center">
-                    <strong className="tabular block font-serif text-3xl font-semibold italic text-[#4a151c]">{value}</strong>
-                    <span className="text-[11px] font-black uppercase tracking-wide text-[#9a7469]">{label}</span>
+
+              <div className="border-t border-[#e3d2c7]">
+                {cifras.map(([valor, etiqueta]) => (
+                  <div key={etiqueta} className="flex items-baseline gap-3 border-b border-[#e3d2c7] py-2.5">
+                    <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#8a5a52]">{etiqueta}</span>
+                    <span aria-hidden="true" className="hidden flex-1 border-b border-dotted border-[#c9b1a5] lg:block" />
+                    <span className="tabular ml-auto font-serif text-xl font-semibold italic text-[#4a151c]">{valor}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="relative z-10 grid min-h-[620px] grid-cols-2 gap-4">
-              <div className="mt-20 overflow-hidden rounded-t-full rounded-b-[2rem] bg-white p-3 shadow-2xl shadow-[#4a151c]/10">
-                <img src="/img/bouquet.jpg" alt="Ramo de rosas rosadas" className="h-full w-full rounded-t-full rounded-b-[1.5rem] object-cover" />
-              </div>
-              <div className="space-y-4">
-                <div className="overflow-hidden rounded-[2rem] bg-white p-3 shadow-xl shadow-[#4a151c]/10">
-                  <img src="/img/foto-14907509678688.jpg" alt="Flores frescas" className="h-72 w-full rounded-[1.5rem] object-cover" />
-                </div>
-                <div className="rounded-[2rem] bg-[#4a151c] p-7 text-white shadow-xl shadow-[#4a151c]/15">
-                  <p className="font-serif text-3xl italic leading-tight">“Cada ramo se arma como una pequeña carta.”</p>
-                  <p className="mt-5 text-sm font-semibold text-white/58">Atelier Siena · Punto Fijo</p>
-                </div>
+            <Figura
+              src="/img/bouquet.jpg"
+              alt="Ramo de rosas rosadas, durazno y blanco con eucalipto, envuelto en papel kraft y atado con cuerda"
+              numero="Fig. 1"
+              pie="Ramo Siena Signature, armado a mano en el atelier de Punto Fijo."
+              imgClassName="h-[clamp(20rem,56vh,40rem)]"
+            />
+
+            <div className="hidden lg:flex lg:items-center lg:justify-center">
+              <span className="rotate-180 text-[10px] font-extrabold uppercase tracking-[0.4em] text-[#8a5a52] [writing-mode:vertical-rl]">
+                Flor de corte · armado a mano · Punto Fijo
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <DivisorPetalos />
+
+        <section id="destacado" className="mx-auto max-w-[100rem] px-5 pb-14 lg:px-10 lg:pb-20">
+          <div className="grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+            <Figura
+              src="/img/garden-table.jpg"
+              alt="Mesa de jardín al atardecer con centro de flores rosadas, velas altas y copas dispuestas"
+              numero="Fig. 2"
+              pie="Mesa Jardín Íntimo montada para una cena civil en un jardín de Punto Fijo."
+              imgClassName="h-[clamp(18rem,52vh,34rem)]"
+            />
+
+            <div className="lg:pt-4">
+              <CabeceraSeccion kicker="Destacado de la temporada" nota="Doble página">
+                Mesa Jardín Íntimo para <span className="font-medium italic">celebrar sin prisa</span>
+              </CabeceraSeccion>
+
+              <p className="capitular mt-6 text-base leading-8 text-[#76574f]">
+                Un centro de mesa no se improvisa: se corta, se mide y se coloca pensando en la conversación de
+                quienes se sienten alrededor. Este diseño reúne rosas rosadas, ranúnculos blancos y follaje
+                suelto en un jarrón de cerámica, con velas altas que bajan la luz cuando cae la tarde. Lo montamos
+                el mismo día del evento y lo entregamos ya dispuesto.
+              </p>
+
+              <blockquote className="mt-7 border-t border-[#e3d2c7] pt-6 font-serif text-2xl italic leading-snug text-[#4a151c] sm:text-3xl">
+                “Un arreglo se construye como un párrafo: una idea, ritmo y un cierre que se recuerda.”
+                <span className="mt-3 block text-[10px] font-extrabold uppercase not-italic tracking-[0.24em] text-[#8a5a52]">
+                  Atelier Siena · Punto Fijo
+                </span>
+              </blockquote>
+
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-[#e3d2c7] pt-6">
+                <strong className="tabular font-serif text-5xl font-semibold italic text-[#4a151c]">$120</strong>
+                <span className="max-w-xs text-sm leading-6 text-[#76574f]">
+                  Centro de mesa para cenas, bodas civiles y celebraciones.
+                </span>
+                <a
+                  href={wa('Hola, quiero el arreglo Mesa Jardín Íntimo ($120).')}
+                  aria-label="Pedir Mesa Jardín Íntimo"
+                  className="ml-auto inline-flex items-center justify-center border border-[#4a151c] bg-[#4a151c] px-6 py-3.5 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:border-[#7f2432] hover:bg-[#7f2432]"
+                >
+                  Pedir este arreglo
+                </a>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="catalogo" className="bg-white py-24">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-              <div>
-                <p className="text-sm font-black uppercase tracking-[0.22em] text-[#9f5964]">Colección floral</p>
-                <h2 className="mt-3 max-w-3xl font-serif text-5xl italic tracking-[-0.02em] text-[#4a151c] sm:text-6xl">Arreglos listos para regalar</h2>
+        <section id="catalogo" className="border-y border-[#e3d2c7] bg-white/70 py-16 lg:py-24">
+          <div className="mx-auto max-w-[100rem] px-5 lg:px-10">
+            <CabeceraSeccion numero="01" kicker="Índice de la colección" nota="Precios en dólares">
+              Arreglos listos <span className="font-medium italic">para regalar</span>
+            </CabeceraSeccion>
+
+            <div className="mt-7 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <p className="max-w-md text-base leading-7 text-[#76574f]">
+                Arreglos del día con flor fresca. Guarda los que te gusten con el corazón y consúltalos todos juntos.
+              </p>
+
+              <div className="-mb-1 flex gap-6 overflow-x-auto pb-1" role="group" aria-label="Filtrar por ocasión">
+                {occasions.map((occasion) => (
+                  <button
+                    key={occasion}
+                    type="button"
+                    aria-pressed={activeOccasion === occasion}
+                    onClick={() => setActiveOccasion(occasion)}
+                    className={`shrink-0 border-b-2 pb-2 text-xs font-extrabold uppercase tracking-[0.18em] transition ${activeOccasion === occasion ? 'border-[#4a151c] text-[#4a151c]' : 'border-transparent text-[#8a5a52] hover:border-[#e3d2c7] hover:text-[#4a151c]'}`}
+                  >
+                    {occasion}
+                  </button>
+                ))}
               </div>
-              <p className="max-w-md text-base leading-7 text-[#76574f]">Arreglos del día con flor fresca. Guarda los que te gusten con el corazón y consúltalos todos juntos.</p>
             </div>
 
-            <div className="mb-10 flex gap-3 overflow-x-auto pb-2" role="group" aria-label="Filtrar por ocasión">
-              {occasions.map((occasion) => (
-                <button
-                  key={occasion}
-                  type="button"
-                  aria-pressed={activeOccasion === occasion}
-                  onClick={() => setActiveOccasion(occasion)}
-                  className={`shrink-0 rounded-full border px-5 py-2.5 text-sm font-black transition ${activeOccasion === occasion ? 'border-[#4a151c] bg-[#4a151c] text-white' : 'border-[#ead8cf] bg-[#fbf4ed] text-[#785a52] hover:border-[#4a151c]'}`}
-                >
-                  {occasion}
-                </button>
-              ))}
-            </div>
+            <ol className="mt-10 border-t border-[#e3d2c7]">
+              {filteredArrangements.map((item, indice) => (
+                <li key={item.name} className="border-b border-[#e3d2c7]">
+                  <article className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:gap-6">
+                    <div className="flex min-w-0 flex-1 items-center gap-4 sm:gap-6">
+                      <span className="tabular w-7 shrink-0 font-serif text-xl font-semibold italic text-[#8a4a55]">{folio(indice)}</span>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="h-20 w-20 shrink-0 border border-[#e0cdc2] object-cover sm:h-24 sm:w-24"
+                      />
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-[#8a5a52]">{item.occasion}</p>
+                          {item.tag && (
+                            <span className="border border-[#8a4a55] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#8a4a55]">
+                              {item.tag}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="mt-1 font-serif text-2xl font-semibold italic leading-tight text-[#4a151c] sm:text-3xl">{item.name}</h3>
+                        <p className="mt-1 text-sm leading-6 text-[#76574f]">{item.note}</p>
+                      </div>
+                      <span aria-hidden="true" className="hidden flex-1 self-center border-b border-dotted border-[#c9b1a5] lg:block" />
+                    </div>
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredArrangements.map((item) => (
-                <article key={item.name} className="group flex flex-col overflow-hidden rounded-[2rem] border border-[#ead8cf] bg-[#fbf4ed] shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#4a151c]/10">
-                  <div className="relative aspect-[4/4.6] overflow-hidden bg-[#f2dfd6]">
-                    <img src={item.image} alt={item.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                    {item.tag && <span className="absolute left-5 top-5 rounded-full bg-white/88 px-4 py-2 text-xs font-black uppercase tracking-wide text-[#4a151c] backdrop-blur">{item.tag}</span>}
-                    <button
-                      type="button"
-                      aria-pressed={favorites.includes(item.name)}
-                      onClick={() => toggleFavorite(item.name)}
-                      className={`absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full text-lg shadow-sm backdrop-blur transition ${favorites.includes(item.name) ? 'bg-[#4a151c] text-white' : 'bg-white/88 text-[#4a151c] hover:bg-[#4a151c] hover:text-white'}`}
-                      aria-label={`Guardar ${item.name}`}
-                    >
-                      {favorites.includes(item.name) ? '♥' : '♡'}
-                    </button>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#9f5964]">{item.occasion}</p>
-                    <h3 className="mt-2 font-serif text-3xl italic leading-tight text-[#4a151c]">{item.name}</h3>
-                    <p className="mt-3 mb-6 text-sm leading-6 text-[#76574f]">{item.note}</p>
-                    <div className="mt-auto flex items-center justify-between gap-4">
+                    <div className="flex items-center justify-between gap-4 sm:justify-end">
                       <strong className="tabular font-serif text-3xl font-semibold italic text-[#4a151c]">${item.price}</strong>
-                      <a href={wa(`Hola, quiero pedir el ${item.name} ($${item.price}).`)} aria-label={`Pedir ${item.name}`} className="rounded-full bg-[#4a151c] px-5 py-3 text-sm font-black text-white transition hover:bg-[#7f2432] active:scale-95">
+                      <button
+                        type="button"
+                        aria-pressed={favorites.includes(item.name)}
+                        onClick={() => toggleFavorite(item.name)}
+                        className={`grid h-11 w-11 shrink-0 place-items-center border text-lg transition ${favorites.includes(item.name) ? 'border-[#4a151c] bg-[#4a151c] text-white' : 'border-[#c9b1a5] bg-white text-[#4a151c] hover:border-[#4a151c]'}`}
+                        aria-label={`Guardar ${item.name}`}
+                      >
+                        {favorites.includes(item.name) ? '♥' : '♡'}
+                      </button>
+                      <a
+                        href={wa(`Hola, quiero pedir el ${item.name} ($${item.price}).`)}
+                        aria-label={`Pedir ${item.name}`}
+                        className="border border-[#4a151c] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[#4a151c] transition hover:bg-[#4a151c] hover:text-white"
+                      >
                         Pedir
                       </a>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </section>
 
-        <section id="servicios" className="py-24">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="mx-auto mb-12 max-w-3xl text-center">
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#9f5964]">Servicios</p>
-              <h2 className="mt-3 font-serif text-5xl italic tracking-[-0.02em] text-[#4a151c] sm:text-6xl">No solo vendemos flores, diseñamos momentos</h2>
-            </div>
-            <div className="grid gap-6 lg:grid-cols-3">
-              {services.map((service) => (
-                <article key={service.title} className="group overflow-hidden rounded-t-full rounded-b-[2rem] bg-white p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#4a151c]/10">
-                  <img src={service.image} alt={service.title} className="h-80 w-full rounded-t-full rounded-b-[1.5rem] object-cover transition duration-700 group-hover:scale-[1.03]" />
-                  <div className="p-6 text-center">
-                    <h3 className="font-serif text-3xl italic text-[#4a151c]">{service.title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-[#76574f]">{service.desc}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
+        <DivisorPetalos />
+
+        <section id="servicios" className="mx-auto max-w-[100rem] px-5 py-8 lg:px-10 lg:py-14">
+          <CabeceraSeccion numero="02" kicker="Servicios del atelier" nota="Con encargo previo">
+            No solo vendemos flores, <span className="font-medium italic">diseñamos momentos</span>
+          </CabeceraSeccion>
+
+          <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+            {services.map((service, indice) => (
+              <figure key={service.title} className={indice === 1 ? 'md:mt-14' : indice === 2 ? 'md:mt-7' : ''}>
+                <div className="border border-[#e0cdc2] bg-white p-3 shadow-[0_26px_50px_-45px_rgba(74,21,28,0.55)]">
+                  <img src={service.image} alt={service.title} className="h-72 w-full object-cover sm:h-80" />
+                </div>
+                <figcaption className="mt-4">
+                  <span className="tabular text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#8a4a55]">{folio(indice)} —</span>
+                  <h3 className="mt-2 font-serif text-3xl font-semibold italic leading-tight text-[#4a151c]">{service.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#76574f]">{service.desc}</p>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </section>
 
-        <section id="atelier" className="bg-[#4a151c] px-5 py-24 text-white lg:px-8">
-          <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.04] lg:grid-cols-[1fr_1fr]">
-            <div className="p-8 sm:p-12 lg:p-16">
-              <p className="text-sm font-black uppercase tracking-[0.24em] text-[#f4c6b4]">El ritmo del atelier</p>
-              <h2 className="mt-4 max-w-2xl font-serif text-5xl italic tracking-[-0.02em] sm:text-6xl">Flores frescas, armado lento y entrega cuidada</h2>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-white/64">Compramos flor cada mañana y armamos cada pedido a mano el mismo día. Si pides antes de las 12, sale con la ruta de las 2.</p>
-              <div className="mt-9 divide-y divide-white/10 rounded-[2rem] border border-white/10 bg-white/[0.04]">
-                {moments.map(([time, text]) => (
-                  <div key={time} className="flex items-center justify-between gap-5 px-5 py-4">
-                    <strong className="font-serif text-2xl italic text-[#f8d8c4]">{time}</strong>
-                    <span className="text-right text-sm font-semibold text-white/62">{text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative min-h-[460px]">
-              <img src="/img/foto-1559563362c667.jpg" alt="Florista preparando arreglo" className="absolute inset-0 h-full w-full object-cover opacity-75" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#4a151c]/90 to-transparent" />
-            </div>
-          </div>
-        </section>
-
-        <section id="resenas" className="bg-white py-24">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="mx-auto mb-12 max-w-3xl text-center">
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#9f5964]">Reseñas</p>
-              <h2 className="mt-3 font-serif text-5xl italic tracking-[-0.02em] text-[#4a151c] sm:text-6xl">La emoción también se diseña</h2>
-            </div>
-            <div className="grid gap-6 md:grid-cols-3">
-              {reviews.map((review) => (
-                <article key={review.name} className="rounded-[2rem] border border-[#ead8cf] bg-[#fbf4ed] p-7">
-                  <div className="mb-6 text-[#b56b76]" aria-label="5 de 5 estrellas">★★★★★</div>
-                  <p className="text-base leading-8 text-[#76574f]">“{review.text}”</p>
-                  <div className="mt-7 flex items-center gap-3">
-                    <img src={review.image} alt={review.name} className="h-12 w-12 rounded-full object-cover" />
-                    <strong className="text-sm font-black text-[#4a151c]">{review.name}</strong>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="pedido" className="px-5 py-24 lg:px-8">
-          <div className="mx-auto grid max-w-6xl gap-10 rounded-[2.5rem] bg-[#f1d6c8] p-6 shadow-2xl shadow-[#4a151c]/10 sm:p-12 lg:grid-cols-[.9fr_1.1fr] lg:p-14">
+        <section id="atelier" className="mt-16 bg-[#4a151c] text-white lg:mt-24">
+          <div className="mx-auto grid max-w-[100rem] gap-10 px-5 py-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:px-10 lg:py-24">
             <div>
-              <p className="text-sm font-black uppercase tracking-[0.24em] text-[#9f5964]">Pedido a medida</p>
-              <h2 className="mt-4 font-serif text-5xl italic tracking-[-0.02em] text-[#4a151c] sm:text-6xl">Cuéntanos la ocasión y armamos algo irrepetible</h2>
-              <p className="mt-5 max-w-md text-base leading-7 text-[#76574f]">Llena lo que sepas y te escribimos el mensaje. Lo revisas en WhatsApp antes de enviarlo y te respondemos con una propuesta y foto de referencia.</p>
+              <div className="flex items-center gap-4 border-t-2 border-white/45 pt-4">
+                <span className="tabular font-serif text-lg font-semibold italic text-[#f8d8c4]">03</span>
+                <span className="text-[11px] font-extrabold uppercase tracking-[0.28em] text-[#f0c3b3]">Reportaje</span>
+                <span className="hidden h-px flex-1 bg-white/25 md:block" />
+                <span className="hidden text-xs italic text-white/75 md:block">El ritmo del atelier</span>
+              </div>
+              <h2 className="mt-6 max-w-2xl font-serif text-[clamp(2.35rem,4.6vw,4.25rem)] font-semibold leading-[0.95] tracking-[-0.02em] text-white">
+                Flores frescas, armado lento <span className="font-medium italic text-[#f8d8c4]">y entrega cuidada</span>
+              </h2>
+              <p className="mt-6 max-w-xl text-base leading-8 text-white/75 lg:text-lg">
+                Compramos flor cada mañana y armamos cada pedido a mano el mismo día. Si pides antes de las 12,
+                sale con la ruta de las 2.
+              </p>
+
+              <ol className="mt-9 border-t border-white/20">
+                {moments.map(([time, text], indice) => (
+                  <li key={time} className="flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b border-white/20 py-4">
+                    <span className="tabular w-6 text-[10px] font-extrabold tracking-[0.2em] text-[#f0c3b3]">{folio(indice)}</span>
+                    <strong className="font-serif text-2xl font-semibold italic text-[#f8d8c4]">{time}</strong>
+                    <span className="ml-auto text-right text-sm leading-6 text-white/75">{text}</span>
+                  </li>
+                ))}
+              </ol>
             </div>
-            <form className="grid gap-4 rounded-[2rem] bg-white/70 p-5 sm:grid-cols-2 sm:p-7" onSubmit={(event) => event.preventDefault()} noValidate>
-              <label className="grid gap-2 text-sm font-bold text-[#4a151c]">
-                Ocasión
-                <select value={encargo.ocasion} onChange={campo('ocasion')} className="rounded-2xl border border-[#e5cfc6] bg-white px-4 py-3 font-semibold outline-none transition focus:border-[#4a151c]">
-                  {occasions.slice(1).map((o) => <option key={o}>{o}</option>)}
-                  <option>Aniversario</option>
-                </select>
-              </label>
-              <label className="grid gap-2 text-sm font-bold text-[#4a151c]">
-                Presupuesto
-                <select value={encargo.presupuesto} onChange={campo('presupuesto')} className="rounded-2xl border border-[#e5cfc6] bg-white px-4 py-3 font-semibold outline-none transition focus:border-[#4a151c]">
-                  {presupuestos.map((p) => <option key={p}>{p}</option>)}
-                </select>
-              </label>
-              <label className="grid gap-2 text-sm font-bold text-[#4a151c] sm:col-span-2">
-                ¿Para quién es?
-                <input
-                  id="encargo-para"
-                  value={encargo.para}
-                  onChange={campo('para')}
-                  aria-invalid={faltaPara}
-                  aria-describedby="encargo-para-error"
-                  placeholder="Ej: mi mamá, Carmen"
-                  className={`rounded-2xl border bg-white px-4 py-3 font-semibold outline-none transition placeholder:font-medium placeholder:text-[#b69990] focus:border-[#4a151c] ${faltaPara ? 'border-[#b4232f]' : 'border-[#e5cfc6]'}`}
-                />
-                <span id="encargo-para-error" className="min-h-4 text-xs font-semibold text-[#b4232f]">{faltaPara ? 'Dinos para quién es: así elegimos flor y tarjeta.' : ''}</span>
-              </label>
-              <label className="grid gap-2 text-sm font-bold text-[#4a151c] sm:col-span-2">
-                <span>Colores o flores que le gustan <span className="font-medium text-[#9a7469]">(opcional)</span></span>
-                <input value={encargo.colores} onChange={campo('colores')} placeholder="Ej: tonos pastel, nada de lirios" className="rounded-2xl border border-[#e5cfc6] bg-white px-4 py-3 font-semibold outline-none transition placeholder:font-medium placeholder:text-[#b69990] focus:border-[#4a151c]" />
-              </label>
-              <label className="grid gap-2 text-sm font-bold text-[#4a151c] sm:col-span-2">
-                <span>Mensaje para la tarjeta <span className="font-medium text-[#9a7469]">(opcional)</span></span>
-                <textarea value={encargo.tarjeta} onChange={campo('tarjeta')} rows={3} maxLength={180} placeholder="Lo escribimos a mano" className="resize-none rounded-2xl border border-[#e5cfc6] bg-white px-4 py-3 font-semibold outline-none transition placeholder:font-medium placeholder:text-[#b69990] focus:border-[#4a151c]" />
-                <span className="tabular text-right text-xs font-semibold text-[#9a7469]">{encargo.tarjeta.length}/180</span>
-              </label>
-              <a href={wa(mensajeEncargo)} onClick={enviarEncargo} className="inline-flex justify-center rounded-full bg-[#4a151c] px-8 py-4 text-base font-black text-white transition hover:bg-[#7f2432] active:scale-[.98] sm:col-span-2">
-                Preparar mensaje en WhatsApp
-              </a>
+
+            <Figura
+              src="/img/foto-1559563362c667.jpg"
+              alt="Rosa roja abierta entre hojas oscuras, fotografiada de cerca"
+              numero="Fig. 3"
+              pie="Corte de la mañana: la flor se revisa tallo por tallo antes de entrar al armado."
+              imgClassName="h-[clamp(20rem,54vh,36rem)]"
+              tono="claro"
+            />
+          </div>
+        </section>
+
+        <section id="resenas" className="border-b border-[#e3d2c7] bg-white/70 py-16 lg:py-24">
+          <div className="mx-auto max-w-[100rem] px-5 lg:px-10">
+            <CabeceraSeccion numero="04" kicker="Cartas de lectoras" nota="Publicadas con permiso">
+              La emoción <span className="font-medium italic">también se diseña</span>
+            </CabeceraSeccion>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-3">
+              {reviews.map((review, indice) => (
+                <article key={review.name} className="flex flex-col border border-[#e3d2c7] bg-[#fbf4ed] p-7 shadow-[0_26px_50px_-46px_rgba(74,21,28,0.5)]">
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#8a5a52]">Carta N.º {folio(indice)}</p>
+                  <p className="mt-4 font-serif text-xl italic leading-8 text-[#4a151c]">“{review.text}”</p>
+                  <div className="mt-auto flex items-center gap-3 border-t border-dashed border-[#dcc4b8] pt-5">
+                    <img src={review.image} alt={`Retrato de ${review.name}`} className="h-12 w-12 shrink-0 rounded-full object-cover" />
+                    <div className="min-w-0">
+                      <h3 className="font-serif text-lg font-semibold italic text-[#4a151c]">{review.name}</h3>
+                      <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8a5a52]">Lectora verificada</p>
+                    </div>
+                    <span className="ml-auto text-[#8a4a55]" aria-label="5 de 5 estrellas">★★★★★</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <DivisorPetalos />
+
+        <section id="pedido" className="pb-20 lg:pb-28">
+          <div className="mx-auto grid max-w-[100rem] gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:px-10">
+            <div>
+              <CabeceraSeccion numero="05" kicker="Pedido a medida" nota="Respuesta el mismo día">
+                Cuéntanos la ocasión y armamos algo <span className="font-medium italic">irrepetible</span>
+              </CabeceraSeccion>
+
+              <p className="mt-6 max-w-md text-base leading-7 text-[#76574f]">
+                Llena lo que sepas y te escribimos el mensaje. Lo revisas en WhatsApp antes de enviarlo y te
+                respondemos con una propuesta y foto de referencia.
+              </p>
+
+              <ol className="mt-8 border-t border-[#e3d2c7]">
+                {[
+                  'Te proponemos flor, paleta y formato según la ocasión.',
+                  'Confirmamos precio y fecha antes de armar nada.',
+                  'Coordinamos entrega, dedicatoria y evidencia fotográfica.',
+                ].map((paso, indice) => (
+                  <li key={paso} className="flex items-baseline gap-4 border-b border-[#e3d2c7] py-4 text-sm leading-6 text-[#76574f]">
+                    <span className="tabular font-serif text-lg font-semibold italic text-[#8a4a55]">{folio(indice)}</span>
+                    <span>{paso}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <form className="border border-dashed border-[#c9a08f] bg-white/80 p-5 sm:p-7" onSubmit={(event) => event.preventDefault()} noValidate>
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-dashed border-[#dcc4b8] pb-4 text-[10px] font-extrabold uppercase tracking-[0.26em] text-[#8a5a52]">
+                <span>Boleta de encargo</span>
+                <span className="tabular">Siena Flower · N.º 12</span>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="grid gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#4a151c]">
+                  Ocasión
+                  <select value={encargo.ocasion} onChange={campo('ocasion')} className="border border-[#e0cdc2] bg-white px-4 py-3 text-sm font-semibold normal-case tracking-normal text-[#2d1817] outline-none transition focus:border-[#4a151c]">
+                    {occasions.slice(1).map((o) => <option key={o}>{o}</option>)}
+                    <option>Aniversario</option>
+                  </select>
+                </label>
+                <label className="grid gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#4a151c]">
+                  Presupuesto
+                  <select value={encargo.presupuesto} onChange={campo('presupuesto')} className="border border-[#e0cdc2] bg-white px-4 py-3 text-sm font-semibold normal-case tracking-normal text-[#2d1817] outline-none transition focus:border-[#4a151c]">
+                    {presupuestos.map((p) => <option key={p}>{p}</option>)}
+                  </select>
+                </label>
+                <label className="grid gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#4a151c] sm:col-span-2">
+                  ¿Para quién es?
+                  <input
+                    id="encargo-para"
+                    value={encargo.para}
+                    onChange={campo('para')}
+                    aria-invalid={faltaPara}
+                    aria-describedby="encargo-para-error"
+                    placeholder="Ej: mi mamá, Carmen"
+                    className={`border bg-white px-4 py-3 text-sm font-semibold normal-case tracking-normal text-[#2d1817] outline-none transition placeholder:font-medium placeholder:text-[#8a6f66] focus:border-[#4a151c] ${faltaPara ? 'border-[#b4232f]' : 'border-[#e0cdc2]'}`}
+                  />
+                  <span id="encargo-para-error" className="min-h-4 text-xs font-semibold normal-case tracking-normal text-[#b4232f]">{faltaPara ? 'Dinos para quién es: así elegimos flor y tarjeta.' : ''}</span>
+                </label>
+                <label className="grid gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#4a151c] sm:col-span-2">
+                  <span>Colores o flores que le gustan <span className="font-medium text-[#8a5a52]">(opcional)</span></span>
+                  <input value={encargo.colores} onChange={campo('colores')} placeholder="Ej: tonos pastel, nada de lirios" className="border border-[#e0cdc2] bg-white px-4 py-3 text-sm font-semibold normal-case tracking-normal text-[#2d1817] outline-none transition placeholder:font-medium placeholder:text-[#8a6f66] focus:border-[#4a151c]" />
+                </label>
+                <label className="grid gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#4a151c] sm:col-span-2">
+                  <span>Mensaje para la tarjeta <span className="font-medium text-[#8a5a52]">(opcional)</span></span>
+                  <textarea value={encargo.tarjeta} onChange={campo('tarjeta')} rows={3} maxLength={180} placeholder="Lo escribimos a mano" className="resize-none border border-[#e0cdc2] bg-white px-4 py-3 text-sm font-semibold normal-case tracking-normal text-[#2d1817] outline-none transition placeholder:font-medium placeholder:text-[#8a6f66] focus:border-[#4a151c]" />
+                  <span className="tabular text-right text-xs font-semibold normal-case tracking-normal text-[#8a5a52]">{encargo.tarjeta.length}/180</span>
+                </label>
+                <a href={wa(mensajeEncargo)} onClick={enviarEncargo} className="inline-flex justify-center border border-[#4a151c] bg-[#4a151c] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:border-[#7f2432] hover:bg-[#7f2432] active:scale-[.98] sm:col-span-2">
+                  Preparar mensaje en WhatsApp
+                </a>
+              </div>
             </form>
           </div>
         </section>
       </main>
 
-      <footer className="bg-[#2d1817] py-14 text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
-          <div>
-            <div className="flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-full bg-[#f8d8c4] font-serif text-xl italic text-[#4a151c]">S</span>
-              <div>
-                <span className="block font-serif text-2xl italic">Siena Flower</span>
-                <span className="text-xs font-semibold text-white/45">Floral studio boutique</span>
-              </div>
+      <footer className="border-t border-[#e3d2c7] bg-[#2d1817] text-white">
+        <div className="mx-auto max-w-[100rem] px-5 py-14 lg:px-10">
+          <div className="flex flex-col gap-6 border-b border-white/15 pb-9 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="font-serif text-4xl italic leading-none text-[#f8d8c4] sm:text-5xl">Siena Flower</p>
+              <p className="mt-3 text-[10px] font-extrabold uppercase tracking-[0.3em] text-white/70">Cuaderno floral · Punto Fijo, Falcón</p>
             </div>
-            <p className="mt-5 max-w-md text-sm leading-6 text-white/50">Ramos personalizados, cajas florales, eventos íntimos y entregas sorpresa en Punto Fijo, armados a mano el mismo día.</p>
+            <p className="max-w-md text-sm leading-6 text-white/70">
+              Ramos personalizados, cajas florales, eventos íntimos y entregas sorpresa en Punto Fijo, armados a mano el mismo día.
+            </p>
           </div>
-          <div>
-            <h3 className="text-sm font-black uppercase tracking-wide">Colección</h3>
-            <ul className="mt-5 space-y-3 text-sm font-semibold text-white/50">
-              <li><a href="#catalogo" className="hover:text-white">Ramos</a></li>
-              <li><a href="#catalogo" className="hover:text-white">Cajas florales</a></li>
-              <li><a href="#servicios" className="hover:text-white">Eventos</a></li>
-              <li><a href="#atelier" className="hover:text-white">Atelier</a></li>
-              <li><a href="#pedido" className="hover:text-white">Pedido a medida</a></li>
-            </ul>
+
+          <div className="grid gap-10 py-10 md:grid-cols-3">
+            <div>
+              <h3 className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#f8d8c4]">Índice</h3>
+              <ul className="mt-5 space-y-3 text-sm font-semibold text-white/70">
+                {enlaces.map(([id, texto], indice) => (
+                  <li key={id}>
+                    <a href={`#${id}`} className="flex items-baseline gap-3 transition hover:text-white">
+                      <span className="tabular text-[10px] font-extrabold text-[#f0c3b3]">{folio(indice)}</span>
+                      {texto}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#f8d8c4]">Colección</h3>
+              <ul className="mt-5 space-y-3 text-sm font-semibold text-white/70">
+                <li><a href="#catalogo" className="transition hover:text-white">Ramos</a></li>
+                <li><a href="#catalogo" className="transition hover:text-white">Cajas florales</a></li>
+                <li><a href="#servicios" className="transition hover:text-white">Eventos</a></li>
+                <li><a href="#destacado" className="transition hover:text-white">Destacado de la temporada</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#f8d8c4]">Contacto</h3>
+              <ul className="mt-5 space-y-3 text-sm font-semibold text-white/70">
+                <li>Punto Fijo, Falcón</li>
+                <li><a href={wa()} className="transition hover:text-white">WhatsApp: +58 412-000-0000</a></li>
+                <li>Pedidos: 8:00 AM - 6:00 PM</li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h3 className="text-sm font-black uppercase tracking-wide">Contacto</h3>
-            <ul className="mt-5 space-y-3 text-sm font-semibold text-white/50">
-              <li>Punto Fijo, Falcón</li>
-              <li><a href={wa()} className="hover:text-white">WhatsApp: +58 412-000-0000</a></li>
-              <li>Pedidos: 8:00 AM - 6:00 PM</li>
-            </ul>
+
+          <div className="border-t border-white/15 pt-7 text-center text-xs font-semibold text-white/60">
+            © 2026 Siena Flower. Demo creada por Carlos Avila - Developer 🇻🇪 ·{' '}
+            <a href="/privacidad/" className="underline underline-offset-2 hover:text-white">Privacidad</a>
           </div>
-        </div>
-        <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 px-5 pt-7 text-center text-xs font-semibold text-white/35 lg:px-8">
-          © 2026 Siena Flower. Demo creada por Carlos Avila - Developer 🇻🇪 ·{' '}
-          <a href="/privacidad/" className="underline underline-offset-2 hover:text-white/60">Privacidad</a>
         </div>
       </footer>
+
       <WhatsAppFlotante texto={mensajeFavoritos} className="bg-[#4a151c] text-white" />
     </div>
   )
