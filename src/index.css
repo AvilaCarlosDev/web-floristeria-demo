@@ -2,7 +2,7 @@
 
 @theme {
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif: Georgia, Cambria, "Times New Roman", serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --color-siena-wine: #4a151c;
   --color-siena-cream: #fbf4ed;
   --color-siena-blush: #f1d6c8;
@@ -30,4 +30,37 @@ img {
 ::selection {
   background: #f1d6c8;
   color: #4a151c;
+}
+
+/* Base de sitio web: la cabecera fija no tapa el título de la sección al saltar desde el menú. */
+section[id], main[id] {
+  scroll-margin-top: 6rem;
+}
+
+h1, h2 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:where(a, button, input, select):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
